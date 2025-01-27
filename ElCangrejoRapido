@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Cangrejo Rápido de Holbox</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to bottom, #87CEEB, #FFD700);
+      font-family: Arial, sans-serif;
+    }
+    #game-container {
+      position: relative;
+      width: 90vw;
+      height: 90vh;
+      border: 5px solid #2F4F4F;
+      background: #FFF8DC;
+      overflow: hidden;
+      border-radius: 15px;
+    }
+    #crab {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: url('https://img.icons8.com/emoji/96/crab-emoji.png') no-repeat center;
+      background-size: contain;
+      cursor: pointer;
+    }
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #2F4F4F;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="score">Puntos: 0</div>
+    <div id="crab"></div>
+  </div>
+  <script>
+    const crab = document.getElementById('crab');
+    const scoreDisplay = document.getElementById('score');
+    const gameContainer = document.getElementById('game-container');
+
+    let score = 0;
+    let speed = 1000; // Initial speed in milliseconds
+
+    function moveCrab() {
+      const containerWidth = gameContainer.clientWidth;
+      const containerHeight = gameContainer.clientHeight;
+      const crabSize = crab.offsetWidth;
+
+      const newX = Math.random() * (containerWidth - crabSize);
+      const newY = Math.random() * (containerHeight - crabSize);
+
+      crab.style.left = `${newX}px`;
+      crab.style.top = `${newY}px`;
+    }
+
+    crab.addEventListener('click', () => {
+      score++;
+      scoreDisplay.textContent = `Puntos: ${score}`;
+
+      // Increase speed as score increases
+      if (score % 5 === 0 && speed > 300) {
+        speed -= 100;
+      }
+
+      moveCrab();
+    });
+
+    function startGame() {
+      moveCrab();
+      setInterval(() => {
+        moveCrab();
+      }, speed);
+    }
+
+    startGame();
+  </script>
+</body>
+</html>
